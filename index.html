@@ -11,7 +11,7 @@
 	<header class="caption">
 		<h1>Ruby on Rails cache workflow</h1>
 	</header>
-	<div class="slide" id="Cover"><div>
+	<div class="slide" id="cover"><div>
 		<section>
 		  <header>
 	        <h1>Ruby on Rails cache workflow</h1>
@@ -22,6 +22,88 @@
 				github.com/brain-geek<br />
 				@brain-geek
 				</div>
+		</section>
+	</div></div>
+
+	<div class="slide shout" id="standard_workflow"><div>
+		<section>
+			<header>
+				<h2>What is standard way of caching in Rails?</h2>
+			</header>
+		</section>
+	</div></div>
+
+  <div class="slide" id="rails-default1"><div>
+    <section>
+      <pre>
+        <code>class ProductsController < ActionController</code>
+        <code>  caches_page :index</code>
+        <code>  def index</code>
+        <code>    @products = Products.all</code>
+        <code>  end</code>
+        <code>  def create</code>
+        <code>    expire_page :action => :index</code>
+        <code>  end</code>
+        <code>end</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div class="slide" id="rails-default2"><div>
+    <section>
+      <pre>
+        <code>class ProductSweeper < ActionController::Caching::Sweeper</code>
+        <code>  observe Product</code>
+        <code>  def after_...</code>
+        <code>  def expire_cache_for(product)</code>
+        <code>    # Expire the index page now that we added a new product</code>
+        <code>    expire_page(:controller => 'products', :action => 'index')</code>
+        <code>    # Expire a fragment</code>
+        <code>    expire_fragment('all_available_products')</code>
+        <code>  end</code>
+        <code>end</code>      
+      </pre>
+    </section>
+  </div></div>
+
+
+  <div class="slide shout" id="rails-default3"><div>
+    <section>
+      <header>
+        <h2>Let's use it on the real news site</h2>
+      </header>
+    </section>
+  </div></div>
+
+
+  <div class="slide cover" id="FitToHeight"><div>
+    <section>
+      <img src="pictures/lbua.png" alt="">
+    </section>
+  </div></div>
+
+
+
+	<div class="slide" id="with-taggable"><div>
+		<section>
+			<header>
+				<h2>With taggable cache</h2>
+			</header>
+
+			<pre>				
+				<code>-  <% cache key, :expires_in => 1.day do %></code>
+				<code>+  <% cache key, :depends_on => [@sort_by, Product] do %></code>
+			</pre>
+		</section>
+	</div></div>
+
+
+	<div class="slide shout" id="thank_you"><div>
+		<section>
+			<header>
+				<h2>Thank you!<br />
+					Questions?</h2>				
+			</header>
 		</section>
 	</div></div>
 
