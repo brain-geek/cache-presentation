@@ -76,13 +76,17 @@
   </div></div>
 
 
-  <div class="slide cover" id="FitToHeight"><div>
+  <div class="slide cover" id="lb_nocomments"><div>
     <section>
-      <img src="pictures/lbua.png" alt="">
+      <img src="pictures/lb.png" alt="">
     </section>
   </div></div>
 
-
+  <div class="slide cover" id="lb_commented"><div>
+    <section>
+      <img src="pictures/lb_commented.png" alt="">
+    </section>
+  </div></div>
 
 	<div class="slide" id="with-taggable"><div>
 		<section>
@@ -91,8 +95,7 @@
 			</header>
 
 			<pre>				
-				<code>-  <% cache key, :expires_in => 1.day do %></code>
-				<code>+  <% cache key, :depends_on => [@sort_by, Product] do %></code>
+				<code><% cache 'main_top', :depends_on => [News] do %></code>
 			</pre>
 		</section>
 	</div></div>
