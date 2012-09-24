@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="themes/ribbon/styles/style.css">
 
   <style>
-    #expire_timeout2  pre {
+    #expire_timeout3  pre {
       margin-top: 45px;
     }
-    #expire_timeout2  pre code {
+    #expire_timeout3 pre code {
       font-size: 50%;
     }
 
@@ -19,7 +19,7 @@
       font: bold;
     }
 
-    #rails-default0 header, #rails-default1 header, #rails-default2 header {
+    #rails-default-expire0 header, #rails-default-expire1 header, #rails-default2 header {
       margin: 0px;
     }
 
@@ -54,7 +54,7 @@
 		</section>
 	</div></div>
 
-  <div class="slide" id="rails-default0"><div>
+  <div class="slide" id="rails-default-set0"><div>
     <section>
       <header>
         <h2>Fragment caching</h2>
@@ -71,10 +71,50 @@
     </section>
   </div></div>
 
-  <div class="slide" id="rails-default1"><div>
+  <div class="slide" id="rails-default-set1"><div>
     <section>
       <header>
         <h2>Action caching</h2>
+      </header>
+
+      <pre>
+        <code>class ProductsController &lt; ActionController</code>
+        <code>  caches_page :index</code>
+        <code>  def index</code>
+        <code>    @products = Products.all</code>
+        <code>  end</code>
+        <code>end</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div class="slide" id="rails-default-set2"><div>
+    <section>
+      <header>
+        <h2>Accessing directly</h2>
+      </header>
+
+      <pre>
+        <code>Rails.cache.write('key', 'value')</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div class="slide" id="expiring-cache"><div>
+    <section>
+      <header>
+        <h2>Cache invalidation</h2>
+      </header>
+      <blockquote>
+        <p>There are only two hard things in Computer Science: cache invalidation and naming things. <br /> Phil Karlton</p>
+      </blockquote>
+    </section>
+  </div></div>
+
+  <div class="slide" id="rails-default-expire0"><div>
+    <section>
+      <header>
+        <h2>Expiring cache directly</h2>
       </header>
 
       <pre>
@@ -91,10 +131,10 @@
     </section>
   </div></div>
 
-  <div class="slide" id="rails-default2"><div>
+  <div class="slide" id="rails-default-expire1"><div>
     <section>
       <header>
-        <h2>Expire by sweepers...</h2>
+        <h2>Expiring cache by sweepers</h2>
       </header>
 
       <pre>
@@ -115,16 +155,30 @@
   <div class="slide" id="expire_timeout0"><div>
     <section>
       <header>
-        <h2>...or expire by timeout/cache key</h2>
+        <h2>Expiring cache by timeout</h2>
       </header>
 
       <code>cache.write(key, value, :expires_in => 1.minute)</code>
-      <br />
-      <code>cache.write([key, @article], value)</code>
     </section>
   </div></div>
 
-  <div class="slide shout" id="expire_timeout1"><div>
+  <div class="slide" id="expire_timeout1"><div>
+    <section>
+      <header>
+        <h2>Using object as key</h2>
+      </header>
+
+      <pre>
+        <code>cache.write([key, @article], value)</code>
+      </pre>
+
+      <p class="note">
+        Well, actualy this is not cache expiry. But by setting object with its fingerprint as cache key, you can be sure that after object change this cache entry will not be accessed.
+      </p>
+    </section>
+  </div></div>
+
+  <div class="slide shout" id="expire_timeout2"><div>
     <section>
       <header>
         <h2>Race condition TTL</h2>
@@ -138,7 +192,7 @@
   </div></div>
 
 
-  <div class="slide" id="expire_timeout2"><div>
+  <div class="slide" id="expire_timeout3"><div>
     <section>
       <header>
         <pre>
@@ -204,7 +258,7 @@
   <div class="slide" id="rails-default-why-bad"><div>
     <section>
       <header>
-        <h2> Why bad? </h2>
+        <h2>Why bad?</h2>
       </header>
 
       <p>
@@ -301,7 +355,6 @@
     </section>
   </div></div>
 
-
   <div class="slide" id="taggable0"><div>
     <section>
       <header>
@@ -311,6 +364,9 @@
         <b>github.com/brain-geek/taggable-cache</b><br />
         Taggable cache provides possibility for automatic cache entries expiration by providing possibility to map cache keys with AR objects.
       </p>
+      <p class="note">
+        Actualy, it does the same thing. The difference is taggable uses AR records and scopes. And, by using AR hooks it deletes corresponding keys. Though, it supports strings too.
+      </p>      
     </section>
   </div></div>
 
