@@ -10,7 +10,7 @@
     #expire_timeout3  pre, #rails-default-lb pre {
       margin-top: 45px;
     }
-    #expire_timeout3 pre code, #rails-default-additional-benefits pre code {
+    #expire_timeout3 pre code, #rails-default-additional-benefits pre code, #rails-default-expire1 pre code {
       font-size: 50%;
     }
 
@@ -135,15 +135,22 @@
 
       <pre>
         <code>class ProductSweeper &lt; ActionController::Caching::Sweeper</code>
-        <code>  observe Product</code>
-        <code>  def after_...</code>
-        <code>  def expire_cache_for(product)</code>
-        <code>    # Expire the index page now that we added a new product</code>
-        <code>    expire_page(:controller => 'products', :action => 'index')</code>
-        <code>    # Expire a fragment</code>
-        <code>    expire_fragment('all_available_products')</code>
-        <code>  end</code>
-        <code>end</code>      
+        <code>  observe Product # This sweeper is going to keep an eye on the Product model</code>
+        <code>  def after_create(product)</code>
+        <code>    expire_cache_for(product)</code>
+        <code>  end</code>
+        <code>  def after_update(product)</code>
+        <code>    expire_cache_for(product)</code>
+        <code>  end</code>
+        <code>  def after_destroy(product)</code>
+        <code>    expire_cache_for(product)</code>
+        <code>  end</code>
+        <code>  private</code>
+        <code>  def expire_cache_for(product)</code>
+        <code>    expire_page(:controller => 'products', :action => 'index')</code>
+        <code>    expire_fragment('all_available_products')</code>
+        <code>  end</code>
+        <code>end</code>
       </pre>
     </section>
   </div></div>
