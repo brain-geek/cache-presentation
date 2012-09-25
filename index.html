@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="themes/ribbon/styles/style.css">
 
   <style>
-    #expire_timeout3  pre {
+    #expire_timeout3  pre, #rails-default-lb pre {
       margin-top: 45px;
     }
-    #expire_timeout3 pre code {
+    #expire_timeout3 pre code, #rails-default-additional-benefits pre code {
       font-size: 50%;
     }
 
@@ -21,10 +21,6 @@
 
     #rails-default-expire0 header, #rails-default-expire1 header, #rails-default2 header {
       margin: 0px;
-    }
-
-    #rails-default-lb pre {
-      margin-top:40px;
     }
   </style>
 </head>
@@ -283,6 +279,32 @@
     </section>
   </div></div>
 
+  <div class="slide" id="rails-default-additional-benefits"><div>
+    <section>
+      <header>
+        <h2>And with multiple selects you won`t get this:</h2>
+      </header>
+
+      <pre>
+        <code>[:ru, :uk].each do |loc|</code>
+        <code>  # Expire a fragment</code>
+        <code>  ActionController::Base.new.expire_fragment("cache_tabs_#{loc}")</code>
+        <code>  ActionController::Base.new.expire_fragment("cache_tabs_hide_videos_#{loc}")</code>
+        <code>  product.category.each do |category|</code>
+        <code>    [product.hersteller, product.fill, product.sizes.to_a].flatten.compact.each do |relation|</code>
+        <code>      (1...relation.products.count).each do |page|</code>
+        <code>        ActionController::Base.new.expire_fragment [loc, relation.class.to_s.downcase, relation.id.to_s, page.to_s, category.id]</code>
+        <code>      end</code>
+        <code>      [Hersteller, Size, Fill].each do |cls|</code>
+        <code>        ActionController::Base.new.expire_fragment [loc, 'count', relation.class.to_s.downcase, relation.id.to_s, cls.to_s, category.id]</code>
+        <code>      end</code>
+        <code>    end</code>
+        <code>  end</code>
+        <code>end</code>        
+      </pre>
+    </section>
+  </div></div>
+
   <div class="slide shout" id="what-tools"><div>
     <section>
       <header>
@@ -376,7 +398,7 @@
 				<h2>Taggable cache</h2>
 			</header>
 
-			<pre>				
+			<pre>
 				<code><% cache 'main_slide', :depends_on => [News.slide] do %></code>
         <code><% cache 'main_theme', :depends_on => [News.theme] do %></code>
         <code><% cache 'main_feed', :depends_on => [News] do %></code>
