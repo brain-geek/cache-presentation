@@ -247,9 +247,9 @@
       <pre>
         <code>class NewsSweeper &lt; ActionController::Caching::Sweeper</code>
         <code>  def expire_cache_for(article)</code>
-        <code>    expire_fragment('main_slide') if article.slide</code>
+        <code>    expire_fragment('main_slider') if article.slide</code>
         <code>    expire_fragment('main_theme') if article.theme</code>
-        <!-- <code>    expire_fragment('main_published')</code> -->
+        <code>    expire_fragment('main_published')</code>
         <code>    expire_fragment('main_blogs') if article.blog_article?</code>
         <code>    expire_fragment('main_top') if article.top</code>
         <code>  end</code>
@@ -270,7 +270,7 @@
     </section>
   </div></div>
  -->
-  <div class="slide" id="rails-default-fixed"><div>
+<!--   <div class="slide" id="rails-default-fixed"><div>
     <section>
       <pre>
         <code>class NewsSweeper < ActionController::Caching::Sweeper</code>
@@ -285,7 +285,7 @@
       </pre>
     </section>
   </div></div>
-
+ -->
   <div class="slide" id="rails-default-additional-benefits"><div>
     <section>
       <header>
