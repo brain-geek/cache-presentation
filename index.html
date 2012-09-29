@@ -246,7 +246,6 @@
   <div class="slide" id="rails-default-lb"><div>
     <section>
       <pre>
-<<<<<<< HEAD
         <code>class ArticleSweeper &lt; ActionController::Caching::Sweeper</code>
         <code>  def expire_cache_for(product)</code>
         <code>    expire_fragment('main_slide')</code>
@@ -254,15 +253,6 @@
         <!-- <code>    expire_fragment('main_published')</code> -->
         <code>    expire_fragment('main_blogs')</code>
         <code>    expire_fragment('main_top')</code>
-=======
-        <code>class NewsSweeper &lt; ActionController::Caching::Sweeper</code>
-        <code>  def expire_cache_for(article)</code>
-        <code>    expire_fragment('main_slider') if article.slide</code>
-        <code>    expire_fragment('main_theme') if article.theme</code>
-        <code>    expire_fragment('main_published')</code>
-        <code>    expire_fragment('main_blogs') if article.blog_article?</code>
-        <code>    expire_fragment('main_top') if article.top</code>
->>>>>>> 7d5374abc1a622f018ac83c1bb6c6158b6d4d618
         <code>  end</code>
         <code>end</code>      
       </pre>
