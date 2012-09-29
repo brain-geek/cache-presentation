@@ -188,7 +188,7 @@
   <div class="slide" id="rails-default-lb"><div>
     <section>
       <pre>
-        <code>class NewsSweeper &lt; ActionController::Caching::Sweeper</code>
+        <code>class ArticleSweeper &lt; ActionController::Caching::Sweeper</code>
         <code>  def expire_cache_for(product)</code>
         <code>    expire_fragment('main_slide')</code>
         <code>    expire_fragment('main_theme')</code>
@@ -216,7 +216,7 @@
   <div class="slide" id="rails-default-fixed"><div>
     <section>
       <pre>
-        <code>class NewsSweeper < ActionController::Caching::Sweeper</code>
+        <code>class ArticleSweeper < ActionController::Caching::Sweeper</code>
         <code>  def expire_cache_for(product)</code>
         <code>    expire_fragment('main_slide<span class="error">r</span>')</code>
         <code>    expire_fragment('main_theme')</code>
@@ -321,9 +321,9 @@
 			</header>
 
 			<pre>				
-				<code><% cache 'main_slide', :depends_on => [News.slide] do %></code>
-        <code><% cache 'main_theme', :depends_on => [News.theme] do %></code>
-        <code><% cache 'main_feed', :depends_on => [News] do %></code>
+				<code><% cache 'main_slide', :depends_on => [Article.slide] do %></code>
+        <code><% cache 'main_theme', :depends_on => [Article.theme] do %></code>
+        <code><% cache 'main_feed', :depends_on => [Article] do %></code>
         <code>&lt;% cache [article, 'related'], </code>
         <code>:depends_on => [@article, article.related] do %></code>
 			</pre>
