@@ -246,12 +246,12 @@
     <section>
       <pre>
         <code>class ArticleSweeper &lt; ActionController::Caching::Sweeper</code>
-        <code>  def expire_cache_for(product)</code>
-        <code>    expire_fragment('main_slide')</code>
-        <code>    expire_fragment('main_theme')</code>
-        <!-- <code>    expire_fragment('main_published')</code> -->
-        <code>    expire_fragment('main_blogs')</code>
-        <code>    expire_fragment('main_top')</code>
+        <code>  def expire_cache_for(article)</code>
+        <code>    expire_fragment('main_slider') if article.slide</code>
+        <code>    expire_fragment('main_theme') if article.theme</code>
+        <code>    expire_fragment('main_published')</code>
+        <code>    expire_fragment('main_blogs') if article.blog_article?</code>
+        <code>    expire_fragment('main_top') if article.top</code>
         <code>  end</code>
         <code>end</code>      
       </pre>
