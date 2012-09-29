@@ -182,16 +182,15 @@
     </section>
   </div></div>
 
-  <div class="slide shout" id="expire_timeout2"><div>
+  <div class="slide" id="expire_timeout2"><div>
     <section>
       <header>
         <h2>Race condition TTL</h2>
-        <!--
-        <p>
-          Setting :race_condition_ttl is very useful in situations where a cache entry is used very frequently and is under heavy load. If a cache expires and due to heavy load seven different processes will try to read data natively and then they all will try to write to cache. To avoid that case the first process to find an expired cache entry will bump the cache expiration time by the value set in :race_condition_ttl.          
-        </p>
-        -->
       </header>
+
+      <p class="note">
+        Setting :race_condition_ttl is very useful in situations where a cache entry is used very frequently and is under heavy load. If a cache expires and due to heavy load seven different processes will try to read data natively and then they all will try to write to cache. To avoid that case the first process to find an expired cache entry will bump the cache expiration time by the value set in :race_condition_ttl.          
+      </p>
     </section>
   </div></div>
 
