@@ -14,12 +14,12 @@
       font-size: 50%;
     }
 
-    #rails-default-fixed .error {
-      color: red;
-      font: bold;
+    .error {
+      color: red !important;
+      font: bold !important;
     }
 
-    #rails-default-expire0 header, #rails-default-expire1 header, #rails-default2 header {
+    .smaller_header header , #rails-default2 header {
       margin: 0px;
     }
   </style>
@@ -36,7 +36,6 @@
 
 				<div style="text-align : right;">
 				Alexander Rozumii<br />
-        Innovecs<br />
 				github.com/brain-geek<br />
 				@brain-geek
 				</div>
@@ -46,12 +45,12 @@
 	<div class="slide shout" id="standard_workflow"><div>
 		<section>
 			<header>
-				<h2>What is standard way of caching in Rails?</h2>
+				<h2>What is standard ways to cache data in Rails?</h2>
 			</header>
 		</section>
 	</div></div>
 
-  <div class="slide" id="rails-default-set0"><div>
+  <div class="slide smaller_header" id="rails-default-set0"><div>
     <section>
       <header>
         <h2>Fragment caching</h2>
@@ -108,7 +107,7 @@
     </section>
   </div></div>
 
-  <div class="slide" id="rails-default-expire0"><div>
+  <div class="slide smaller_header" id="rails-default-expire0"><div>
     <section>
       <header>
         <h2>Expiring cache directly</h2>
@@ -128,7 +127,7 @@
     </section>
   </div></div>
 
-  <div class="slide" id="rails-default-expire1"><div>
+  <div class="slide smaller_header" id="rails-default-expire1"><div>
     <section>
       <header>
         <h2>Expiring cache by sweepers</h2>
@@ -189,7 +188,7 @@
       </header>
 
       <p class="note">
-        Setting :race_condition_ttl is very useful in situations where a cache entry is used very frequently and is under heavy load. If a cache expires and due to heavy load seven different processes will try to read data natively and then they all will try to write to cache. To avoid that case the first process to find an expired cache entry will bump the cache expiration time by the value set in :race_condition_ttl.          
+        If a cache expires and due to heavy load seven different processes will try to read data natively and then they all will try to write to cache. To avoid that case the first process to find an expired cache entry will bump the cache expiration time by the value set in :race_condition_ttl.          
       </p>
     </section>
   </div></div>
@@ -247,9 +246,8 @@
       <pre>
         <code>class ArticleSweeper &lt; ActionController::Caching::Sweeper</code>
         <code>  def expire_cache_for(article)</code>
-        <code>    expire_fragment('main_slider') if article.slide</code>
+        <code>    expire_fragment('main_slide') if article.slide</code>
         <code>    expire_fragment('main_theme') if article.theme</code>
-        <code>    expire_fragment('main_published')</code>
         <code>    expire_fragment('main_blogs') if article.blog_article?</code>
         <code>    expire_fragment('main_top') if article.top</code>
         <code>  end</code>
@@ -258,23 +256,15 @@
     </section>
   </div></div>
 
-<!--   <div class="slide" id="rails-default-why-bad"><div>
+  <div class="slide smaller_header" id="rails-default-why-bad"><div>
     <section>
       <header>
         <h2>Why bad?</h2>
       </header>
 
-      <p>
-        <b>It is hard to maintain:</b> I've made some mistakes in previous slide
-      </p>
-    </section>
-  </div></div>
- -->
-<!--   <div class="slide" id="rails-default-fixed"><div>
-    <section>
       <pre>
         <code>class ArticleSweeper < ActionController::Caching::Sweeper</code>
-        <code>  def expire_cache_for(product)</code>
+        <code>  def expire_cache_for(article)</code>
         <code>    expire_fragment('main_slide<span class="error">r</span>') if article.slide</code>
         <code>    expire_fragment('main_theme') if article.theme</code>
         <code class="error">    expire_fragment('main_published')</code>
@@ -285,7 +275,7 @@
       </pre>
     </section>
   </div></div>
- -->
+
   <div class="slide" id="rails-default-additional-benefits"><div>
     <section>
       <header>
@@ -312,18 +302,21 @@
     </section>
   </div></div>
 
-  <div class="slide shout" id="what-tools"><div>
+
+  <div class="slide shout" id="rails4"><div>
     <section>
       <header>
-        <h2>What additional tools do we have?</h2>
+        <h2>What do we have in Rails 4?</h2>
       </header>
     </section>
   </div></div>
 
-<!--   <div class="slide shout" id="cache_digests0"><div>
+  <!-- examples and info about russian doll caching and cache digests - http://blog.remarkablelabs.com/2012/12/russian-doll-caching-cache-digests-rails-4-countdown-to-2013 -->
+
+  <div class="slide shout" id="cache_digests0"><div>
     <section>
       <header>
-        <h2>Cache Digests</h2>
+        <h2>Cache Digests/Russian Doll Caching</h2>
       </header>
     </section>
   </div></div>
@@ -334,10 +327,60 @@
         <h2>Cache Digests</h2>
       </header>
       <p>
-          With this plugin, all calls to #cache in the view will automatically append a digest of that template and all of its dependencies! So you no longer need to manually increment versions in the specific templates you're working on or care about what other templates are depending on the change you make.
+          A call to #cache in your views will now suffix a digest of the template and its dependencies.
       </p>
     </section>
-  </div></div> -->
+  </div></div>
+
+  <div class="slide" id="russ_doll0"><div>
+    <section>
+      <header>
+        <h2>Russian Doll Caching</h2>
+      </header>
+      <p>
+        By nesting fragment caches, it ensures that caches can be reused even when content changes. When a change occurs to the top-most fragment cache, only that cache must be expired. Every nested cache of the parent can be reused, which provides a significant performance increase. <a href="http://blog.remarkablelabs.com/2012/12/russian-doll-caching-cache-digests-rails-4-countdown-to-2013">Examples</a>
+      </p>
+    </section>
+  </div></div>
+
+  <div class="slide shout" id="what-tools"><div>
+    <section>
+      <header>
+        <h2>What additional tools do we have?</h2>
+      </header>
+    </section>
+  </div></div>
+
+
+  <div class="slide" id="mff0"><div>
+    <section>
+      <header>
+        <h2>Multi-fetch Fragments</h2>
+      </header>
+      <p>
+        <b>github.com/n8/multi_fetch_fragments</b><br />
+        
+        Multi-fetch Fragments makes rendering and caching a collection of template partials easier and faster.
+      </p>
+    </section>
+  </div></div>
+
+  <div class="slide" id="mff1"><div>
+    <section>
+      <header>
+        <h2>Multi-fetch Fragments</h2>
+      </header>
+
+      <pre>
+        <code><%= render partial: 'item', collection: @items, cache: Proc.new{|item| [item, 'show']} %></code>
+      </pre>
+
+      <p>
+        Uses Rails' cache <b>read_multi</b> to cache entries of collection by one.
+      </p>
+
+    </section>
+  </div></div>
 
   <div class="slide" id="cachier0"><div>
     <section>
@@ -346,11 +389,10 @@
       </header>
       <p>
         <b>github.com/twinturbo/cashier</b><br />
-        Cache associate individual cache keys with a tag, then expire them all at once. This took my 7 layer loop down to one line of code. It's also made managing the cache throught my application much easier.
+        Cache associate individual cache keys with a tag, then expire them all at once.
       </p>
     </section>
   </div></div>
-
 
   <div class="slide" id="cachier1"><div>
     <section>
@@ -384,6 +426,8 @@
     </section>
   </div></div>
 
+
+
   <div class="slide" id="taggable0"><div>
     <section>
       <header>
@@ -394,7 +438,7 @@
         Taggable cache provides possibility for automatic cache entries expiration by providing possibility to map cache keys with AR objects.
       </p>
       <p class="note">
-        Actualy, it does the same thing. The difference between this solutions is that taggable cache uses AR records and scopes. It deletes corresponding keys on corresponding object cache by using AR hooks. Though, it supports strings too.
+        Actualy, it does the same thing. The difference between this solutions is that taggable cache can also use AR records and scopes. It deletes corresponding keys on corresponding object cache by using AR hooks. Though, it supports strings too.
       </p>      
     </section>
   </div></div>
