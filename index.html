@@ -427,6 +427,42 @@
   </div></div>
 
 
+  <div class="slide" id="cachier2"><div>
+    <section>
+      <header>
+        <h2>Cachier</h2>
+      </header>
+
+      <p class="note">
+        But you still need to expire keys:
+      </p>
+
+      <pre>
+        <code># in a sweeper</code>
+        <code>Cashier.expire 'some-component'</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div class="slide" id="cachier_pros_cons"><div>
+    <section>
+      <header>
+        <h2>Cachier</h2>
+        </header>
+
+        <b>Pros:</b>
+        <ul>
+          <li>Lightweight</li>
+          <li>Clean and elegant code</a>
+        </ul>
+
+        <b>Cons:</b>
+        <ul>
+          <li>Only strings supported as tag</li>
+          <li>No integration with AR scopes and records</a>
+        </ul>
+    </section>
+  </div></div>  
 
   <div class="slide" id="taggable0"><div>
     <section>
@@ -438,24 +474,24 @@
         Taggable cache provides possibility for automatic cache entries expiration by providing possibility to map cache keys with AR objects.
       </p>
       <p class="note">
-        Actualy, it does the same thing. The difference between this solutions is that taggable cache can also use AR records and scopes. It deletes corresponding keys on corresponding object cache by using AR hooks. Though, it supports strings too.
+        Deprecated. The difference between solutions is that taggable cache can also use AR records and scopes. It deletes corresponding keys on corresponding object cache by using AR hooks. Though, it supports strings too.
       </p>      
     </section>
   </div></div>
 
-	<div class="slide" id="taggable1"><div>
-		<section>
-			<header>
-				<h2>Taggable cache</h2>
-			</header>
+  <div class="slide" id="taggable1"><div>
+    <section>
+      <header>
+        <h2>Taggable cache</h2>
+      </header>
 
-			<pre>				
-				<code><% cache 'main_slide', :depends_on => [Article.slide] do %></code>
+      <pre>       
+        <code><% cache 'main_slide', :depends_on => [Article.slide] do %></code>
         <code><% cache 'main_theme', :depends_on => [Article.theme] do %></code>
         <code><% cache 'main_feed', :depends_on => [Article] do %></code>
-			</pre>
-		</section>
-	</div></div>
+      </pre>
+    </section>
+  </div></div>
 
   <div class="slide" id="taggable2"><div>
     <section>
@@ -474,6 +510,79 @@
     </section>
   </div></div>
 
+  <div class="slide" id="taggable_pros_cons"><div>
+    <section>
+      <header>
+        <h2>Taggable cache</h2>
+      </header>
+
+        <b>Pros:</b>
+        <ul>
+          <li>Integrated with AR</li>
+          <li>All kinds of tags: AR scopes, Arel queries, records, strings</a>
+        </ul>
+
+        <b>Cons:</b>
+        <ul>
+          <li>Bad expiry performance with AR scopes</li>
+          <li>Complicated code</a>
+        </ul>
+    </section>
+  </div></div>
+
+
+  <div class="slide" id="arc0"><div>
+    <section>
+      <header>
+        <h2>ActiveRecord Cashier</h2>
+      </header>
+      <p>
+        <b>github.com/brain-geek/activerecord_cashier</b><br />
+        Taggable cache provides triggering cache expiration by manipulating AR objects.
+      </p>
+      <p class="note">
+        Lightweight alternative to taggable cashe, based upon the cashier codebase.
+      </p>      
+    </section>
+  </div></div>
+
+  <div class="slide" id="arc1"><div>
+    <section>
+      <header>
+        <h2>ActiveRecord Cashier</h2>
+      </header>
+
+      <pre>       
+        <code>cache 'main_slide', :depends_on => [Article, Article.slide.to_a] </code>
+        <code>cache 'main_theme', :depends_on => ['article_theme'] </code>
+        <code>cache 'main_feed', :depends_on => [@article]</code>
+        <code>Article.expire_all_cache</code>
+      </pre>
+    </section>
+  </div></div>
+
+  <div class="slide" id="arc_pros_cons"><div>
+    <section>
+      <header>
+        <h2>ActiveRecord Cashier</h2>
+      </header>
+
+        <b>Pros:</b>
+        <ul>
+          <li>Integrated with AR</li>
+          <li>Built upon already existing cashier codebase</li>
+          <li>Tiny code footprint, runs both its own test suite and upstream</li>
+          <li>Supports as tags: records, AR classes and strings</a>
+        </ul>
+
+        <b>Cons:</b>
+        <ul>
+          <li>Does not support AR scopes as tags</li>
+          <li>Yet to be used in production</a>
+        </ul>
+    </section>
+  </div></div>
+
   <div class="slide" id="thank_you"><div>
     <section>
       <header>
@@ -483,6 +592,7 @@
 
         <ul>
           <li>Presentation: &nbsp; <a href="http://brain-geek.github.com/cache-presentation">brain-geek.github.com/cache-presentation</a></li>
+          <li>ActiveRecord Cashier: &nbsp; <a href="http://github.com/brain-geek/activerecord_cashier">github.com/brain-geek/activerecord_cashier</a>
           <li>Cachier: &nbsp; <a href="http://github.com/twinturbo/cashier">github.com/twinturbo/cashier</a>
           <li>Taggable cache: &nbsp; <a href="http://github.com/brain-geek/taggable-cache">github.com/brain-geek/taggable-cache</a>
         </ul>
